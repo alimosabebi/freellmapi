@@ -1,7 +1,9 @@
+version: "3.9"
 
 services:
   freellmapi:
     image: node:20
+    container_name: freellmapi
     working_dir: /app
     volumes:
       - ./app:/app
@@ -9,15 +11,8 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - ENCRYPTION_KEY=super_secret_32_char_key_here
+      - ENCRYPTION_KEY=your_super_secret_32_char_key_here
+      - API_KEY=your_api_key_here
     expose:
       - "3001"
-    restart: unless-stopped
-
-  caddy:
-    image: caddy:2
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-    depends_on:
-      - freellmapi
     restart: unless-stopped
