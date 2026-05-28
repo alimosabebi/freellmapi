@@ -1,9 +1,7 @@
-version: "3.9"
 
 services:
   freellmapi:
     image: node:20
-    container_name: freellmapi
     working_dir: /app
     volumes:
       - ./app:/app
@@ -18,17 +16,8 @@ services:
 
   caddy:
     image: caddy:2
-    container_name: freellmapi_proxy
-    ports:
-      - "8005:80"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
     depends_on:
       - freellmapi
     restart: unless-stopped
-
-volumes:
-  caddy_data:
-  caddy_config:
