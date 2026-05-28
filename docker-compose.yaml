@@ -21,7 +21,7 @@ services:
       - "traefik.http.routers.freellmapi.tls=true"
 
       # Basic Auth
-      - "traefik.http.middlewares.freellmapi-auth.basicauth.users=admin:$$2y$$10$$g/3wNcGw/SLJ0i3PMFnKEeA1vns9g3iFK9ffQGXc4yv0kn0553"
+      - "traefik.http.middlewares.freellmapi-auth.basicauth.users=admin:$$apr1$$tcnw9jz0$$2pkAZlKZcFuYT5UUI7flA."
 
       # Attach auth middleware
       - "traefik.http.routers.freellmapi.middlewares=freellmapi-auth"
