@@ -7,7 +7,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - ENCRYPTION_KEY=your_super_secret_32_char_key_here
+      - ENCRYPTION_KEY=a1cc3501b79487748e1fdbfca0e6ced8dbaaf3d186553ea91448bc4023e8a285
       - API_KEY=your_api_key_here
     expose:
       - "3001"
