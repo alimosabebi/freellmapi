@@ -20,7 +20,7 @@ services:
     image: caddy:2
     container_name: freellmapi_proxy
     ports:
-      - "8080:80"
+      - "8005:80"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
