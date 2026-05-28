@@ -15,17 +15,13 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # Basic Auth
+      # Basic Auth definition (Ensure "Escape special characters" is OFF in Coolify if using $$ here)
       - "traefik.http.middlewares.freellmapi-auth.basicauth.users=admin:$$2y$$05$$H6uskkkW9u9y9F8V0cP8X.7m2F1vd2o9hMT1H9kD114F8CbnZ4Ei6"
 
-      # Attach auth to ALL routers of this container
-      - "traefik.http.routers.*.middlewares=freellmapi-auth@docker"
+      # Tells Coolify to merge this middleware into your auto-generated HTTPS routers
+      - "coolify.traefik.middlewares=freellmapi-auth"
 
       # Service port
       - "traefik.http.services.freellmapi.loadbalancer.server.port=3001"
-
- 
-   
-
 
     restart: unless-stopped
