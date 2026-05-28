@@ -13,20 +13,11 @@ services:
       - "3001"
     
 labels:
+     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.myapp.rule=Host(`subdomain.mydomain.com`)"
+      - "traefik.http.routers.myapp.middlewares=auth-middleware"
+      - "traefik.http.middlewares.auth-middleware.basicauth.users=admin:$$2y$$10$$g/3wNcGw/SLJ0i3PMFnKEeA1vns9g3iFK9ffQGXc4yv0kn0553AZC"
 
-      # Route
-      - "traefik.http.routers.freellmapi.rule=Host(`freellmapi.mydomain.com`)"
-      - "traefik.http.routers.freellmapi.entrypoints=websecure"
-      - "traefik.http.routers.freellmapi.tls=true"
-
-      # Basic Auth
-      - "traefik.http.middlewares.freellmapi-auth.basicauth.users=admin:$$2y$$10$$g/3wNcGw/SLJ0i3PMFnKEeA1vns9g3iFK9ffQGXc4yv0kn0553AZC"
-
-      # Attach auth middleware
-      - "traefik.http.routers.freellmapi.middlewares=freellmapi-auth"
-
-      # Port mapping
-      - "traefik.http.services.freellmapi.loadbalancer.server.port=3001"
 
     restart: unless-stopped
