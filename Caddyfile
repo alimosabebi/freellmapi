@@ -1,0 +1,12 @@
+:80 {
+
+    route {
+
+        # Basic Auth
+        basicauth {
+            admin JDJhJDE0JHFIb2YyNXFKcDh4S3J4S3RrQ0tNRS5pRlc2ZW9oR0N6VkR2VnV1c0xNbWh1cWM0WkZ0N2Fh
+        }
+
+        reverse_proxy freellmapi:3001
+    }
+}
