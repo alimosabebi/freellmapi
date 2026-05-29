@@ -11,7 +11,29 @@ services:
       - API_KEY=your_api_key_here
     expose:
       - "3001"
-    
+    labels:
+      - "traefik.enable=true"
+
+      # 1. Define the Basic Auth middleware
+      - "traefik.http.middlewares.freellmapi-auth.basicauth.users=admin:$2y$10$D1e8yqrEUCmYTT93liR91ObOeDJM8K46pd.jsACe.1ptU6ESLooNi"
+
+      # 2. Router for UI / Dashboard (Applies Basic Auth to everything EXCEPT /v1)
+      - "traefik.http.routers.freellmapi-ui.rule=Host(`freellmapi.bunchoftips.com`) && !PathPrefix(`/v1`)"
+      - "traefik.http.routers.freellmapi-ui.entrypoints=websecure"
+      - "traefik.http.routers.freellmapi-ui.tls=true"
+      - "traefik.http.routers.freellmapi-ui.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.freellmapi-ui.service=freellmapi"
+      - "traefik.http.routers.freellmapi-ui.middlewares=freellmapi-auth"
+
+      # 3. Router for API Requests (Bypasses Basic Auth, protected by your application API_KEY instead)
+      - "traefik.http.routers.freellmapi-api.rule=Host(`freellmapi.bunchoftips.com`) && PathPrefix(`/v1`)"
+      - "traefik.http.routers.freellmapi-api.entrypoints=websecure"
+      - "traefik.http.routers.freellmapi-api.tls=true"
+      - "traefik.http.routers.freellmapi-api.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.freellmapi-api.service=freellmapi"
+
+      # 4. Service Target Port
+      - "traefik.http.services.freellmapi.loadbalancer.server.port=3001"
 
 
     restart: unless-stopped
